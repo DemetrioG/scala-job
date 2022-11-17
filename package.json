@@ -1,0 +1,24 @@
+{
+  "name": "scala-job",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.ts",
+    "build": "sucrase ./src -d ./dist --transforms typescript,imports"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "nodemon": "^2.0.20",
+    "sucrase": "^3.29.0",
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1256.0",
+    "dotenv": "^16.0.3"
+  }
+}
