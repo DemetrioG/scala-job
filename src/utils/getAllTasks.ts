@@ -1,8 +1,24 @@
 import axios from "../api";
-import { IDynamoData } from "../types/types";
+import { IDynamoDeleteData, IDynamoPutData } from "../types/types";
+import selectAllFromDB from "./selectAllFromDB";
 
-export const getAllTasks = async () => {
-  const data: IDynamoData[] = [];
+const getAllTasksFromDB = async () => {
+  const tableData = await selectAllFromDB("clickup_tasks");
+  const response = tableData?.map(({ id }) => {
+    return {
+      DeleteRequest: {
+        Key: {
+          id: id,
+        },
+      },
+    };
+  });
+
+  return response as IDynamoDeleteData[];
+};
+
+const getAllTasksFromClickup = async () => {
+  const data: IDynamoPutData[] = [];
   let increment_page = true;
   let index = -1;
 
@@ -22,7 +38,7 @@ export const getAllTasks = async () => {
       continue;
     }
 
-    const response: IDynamoData[] = tasks.map((e) => {
+    const response: IDynamoPutData[] = tasks.map((e) => {
       return {
         PutRequest: {
           Item: e,
@@ -35,3 +51,11 @@ export const getAllTasks = async () => {
 
   return data;
 };
+
+const getAllTasks = async () => {
+  const currentData = await getAllTasksFromDB();
+  const newData = await getAllTasksFromClickup();
+  return [currentData, newData];
+};
+
+export default getAllTasks;

@@ -1,39 +1,44 @@
 import dotenv from "dotenv";
-import { getAllTasks } from "./utils/getAllTasks";
+import getAllTasks from "./utils/getAllTasks";
 import getFolderLists from "./utils/getFolderLists";
 import getFolder from "./utils/getFolder";
 import getTags from "./utils/getTags";
 import getTeam from "./utils/getTeam";
-import insertIntoDB from "./utils/insertIntoDB";
+import writeIntoDB from "./utils/writeIntoDB";
 dotenv.config();
 
-const refreshAllTaks = async () => {
-  const tasks = await getAllTasks();
-  insertIntoDB("clickup_tasks", tasks);
+const refreshAllTasks = async () => {
+  const [pks, data] = await getAllTasks();
+  await writeIntoDB("clickup_tasks", pks);
+  writeIntoDB("clickup_tasks", data);
 };
 
 const refreshFolderLists = async () => {
-  const folders = await getFolderLists();
-  insertIntoDB("clickup_folder_lists", folders);
+  const [pks, data] = await getFolderLists();
+  await writeIntoDB("clickup_folder_lists", pks);
+  writeIntoDB("clickup_folder_lists", data);
 };
 
 const refreshTags = async () => {
-  const tags = await getTags();
-  insertIntoDB("clickup_tags", tags);
+  const [pks, data] = await getTags();
+  await writeIntoDB("clickup_tags", pks);
+  writeIntoDB("clickup_tags", data);
 };
 
 const refreshTeam = async () => {
-  const team = await getTeam();
-  insertIntoDB("clickup_team", team);
+  const [pks, data] = await getTeam();
+  await writeIntoDB("clickup_team", pks);
+  writeIntoDB("clickup_team", data);
 };
 
 const refreshFolder = async () => {
-  const spaces = await getFolder();
-  insertIntoDB("clickup_folders", spaces);
+  const [pks, data] = await getFolder();
+  await writeIntoDB("clickup_folders", pks);
+  writeIntoDB("clickup_folders", data);
 };
 
-// refreshAllTaks();
-// refreshFolders();
+// refreshAllTasks();
+// refreshFolderLists();
 // refreshTags();
 // refreshTeam();
-refreshFolder();
+// refreshFolder();

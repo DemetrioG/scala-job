@@ -5,8 +5,14 @@ export type TData =
   | "clickup_team"
   | "clickup_folders";
 
-export interface IDynamoData {
+export interface IDynamoPutData {
   PutRequest: {
     Item: object[];
+  };
+}
+
+export interface IDynamoDeleteData {
+  DeleteRequest: {
+    Key: object;
   };
 }
