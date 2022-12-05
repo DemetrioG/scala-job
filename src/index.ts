@@ -10,35 +10,46 @@ dotenv.config();
 const refreshAllTasks = async () => {
   const [pks, data] = await getAllTasks();
   await writeIntoDB("clickup_tasks", pks);
-  writeIntoDB("clickup_tasks", data);
+  return writeIntoDB("clickup_tasks", data);
 };
 
 const refreshFolderLists = async () => {
   const [pks, data] = await getFolderLists();
   await writeIntoDB("clickup_folder_lists", pks);
-  writeIntoDB("clickup_folder_lists", data);
+  return writeIntoDB("clickup_folder_lists", data);
 };
 
 const refreshTags = async () => {
   const [pks, data] = await getTags();
   await writeIntoDB("clickup_tags", pks);
-  writeIntoDB("clickup_tags", data);
+  return writeIntoDB("clickup_tags", data);
 };
 
 const refreshTeam = async () => {
   const [pks, data] = await getTeam();
   await writeIntoDB("clickup_team", pks);
-  writeIntoDB("clickup_team", data);
+  return writeIntoDB("clickup_team", data);
 };
 
 const refreshFolder = async () => {
   const [pks, data] = await getFolder();
   await writeIntoDB("clickup_folders", pks);
-  writeIntoDB("clickup_folders", data);
+  return writeIntoDB("clickup_folders", data);
 };
 
-// refreshAllTasks();
-// refreshFolderLists();
-// refreshTags();
-// refreshTeam();
-// refreshFolder();
+const refreshDatabase = async () => {
+  const BRDate = new Date().toLocaleString("pt-BR", {
+    timeZone: "America/Sao_Paulo",
+  });
+
+  return Promise.allSettled([
+    refreshAllTasks(),
+    refreshFolderLists(),
+    refreshTags(),
+    refreshTeam(),
+    refreshFolder(),
+  ])
+    .then(() => console.log(`Dados atualizados ${BRDate}`))
+    .catch((error) => console.log(error));
+};
+refreshDatabase();
