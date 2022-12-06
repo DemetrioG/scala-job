@@ -42,6 +42,8 @@ const refreshDatabase = async () => {
     timeZone: "America/Sao_Paulo",
   });
 
+  console.log(`Atualizando dados ${BRDate}`);
+
   return Promise.allSettled([
     refreshAllTasks(),
     refreshFolderLists(),
