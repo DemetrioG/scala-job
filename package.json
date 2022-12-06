@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.ts",
     "build": "sucrase ./src -d ./dist --transforms typescript,imports",
-    "start": "pm2 start dist/index.js"
+    "start": "pm2 start dist/index.js --no-autorestart"
   },
   "keywords": [],
   "author": "",
