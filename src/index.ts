@@ -49,7 +49,10 @@ const refreshDatabase = async () => {
     refreshTeam(),
     refreshFolder(),
   ])
-    .then(() => console.log(`Dados atualizados ${BRDate}`))
+    .then((result) => {
+      const error = result.some(({ status }) => status === "rejected");
+      error ? console.log(result) : console.log(`Dados atualizados ${BRDate}`);
+    })
     .catch((error) => console.log(error));
 };
 refreshDatabase();
