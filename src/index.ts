@@ -9,40 +9,34 @@ dotenv.config();
 
 const refreshAllTasks = async () => {
   const [pks, data] = await getAllTasks();
-  await writeIntoDB("clickup_tasks", pks);
   return writeIntoDB("clickup_tasks", data);
 };
 
 const refreshFolderLists = async () => {
   const [pks, data] = await getFolderLists();
-  await writeIntoDB("clickup_folder_lists", pks);
   return writeIntoDB("clickup_folder_lists", data);
 };
 
 const refreshTags = async () => {
   const [pks, data] = await getTags();
-  await writeIntoDB("clickup_tags", pks);
   return writeIntoDB("clickup_tags", data);
 };
 
 const refreshTeam = async () => {
   const [pks, data] = await getTeam();
-  await writeIntoDB("clickup_team", pks);
   return writeIntoDB("clickup_team", data);
 };
 
 const refreshFolder = async () => {
   const [pks, data] = await getFolder();
-  await writeIntoDB("clickup_folders", pks);
   return writeIntoDB("clickup_folders", data);
 };
 
 const refreshDatabase = async () => {
-  const BRDate = new Date().toLocaleString("pt-BR", {
-    timeZone: "America/Sao_Paulo",
-  });
-
-  console.log(`Atualizando dados ${BRDate}`);
+  const timeZone = { timeZone: "America/Sao_Paulo" };
+  console.log(
+    `Atualizando dados ${new Date().toLocaleString("pt-BR", timeZone)}`
+  );
 
   return Promise.allSettled([
     refreshAllTasks(),
@@ -53,7 +47,11 @@ const refreshDatabase = async () => {
   ])
     .then((result) => {
       const error = result.some(({ status }) => status === "rejected");
-      error ? console.log(result) : console.log(`Dados atualizados ${BRDate}`);
+      error
+        ? console.log(result)
+        : console.log(
+            `Dados atualizados ${new Date().toLocaleString("pt-BR", timeZone)}`
+          );
     })
     .catch((error) => console.log(error));
 };
