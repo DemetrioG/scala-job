@@ -7,7 +7,7 @@ export type TData =
 
 export interface IDynamoPutData {
   PutRequest: {
-    Item: object[];
+    Item: object;
   };
 }
 
