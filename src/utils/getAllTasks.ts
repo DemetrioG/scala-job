@@ -23,7 +23,9 @@ const getAllTasksFromClickup = async () => {
   let index = -1;
 
   while (increment_page) {
-    const URL = `team/${process.env.CLICKUP_TEAM_ID}/task?page=${++index}&subtasks=true`;
+    const URL = `team/${
+      process.env.CLICKUP_TEAM_ID
+    }/task?page=${++index}&subtasks=true&include_closed=true`;
 
     const {
       data: { tasks },

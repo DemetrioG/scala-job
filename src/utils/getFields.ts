@@ -26,7 +26,7 @@ const getFields = async () => {
   for (const [i, pk] of pks.entries()) {
     const URL = `task/${pk}?include_subtasks=true`;
 
-    await sleep(500);
+    await sleep(800);
     const {
       data: { attachments, id, subtasks },
     } = await axios.get(URL, {
